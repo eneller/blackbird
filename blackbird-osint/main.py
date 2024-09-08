@@ -1,11 +1,14 @@
 import click
 import click_config_file
+from tqdm import tqdm
+
+import logging
 
 def lookup_username(username):
-    print(username)
+    return username
 
 def lookup_email(email):
-    print(email)
+    return email
 
 @click.command()
 @click.option('--username', '-u', help='Perform lookup using a username')
@@ -21,16 +24,17 @@ def lookup_email(email):
 #functionality deliberately removed: pdf export, permutations
 @click.help_option('--help', '-h')
 @click_config_file.configuration_option(implicit=False)
-def main(username, email, username_file, email_file, filter, no_nsfw, timeout,  max_concurrent_requests, proxy, csv):
+def main_cli(username, email, username_file, email_file, filter, no_nsfw, timeout,  max_concurrent_requests, proxy, csv):
+    print('heere')
     if email:
-        lookup_email(email)
+        results = lookup_email(email)
     elif username:
-        lookup_username(username)
+        results = lookup_username(username)
     elif username_file:
-        map(lookup_username, username_file)
+        results = map(lookup_username, tqdm(username_file))
     elif email_file:
-        map(lookup_email, email_file)
+        results = map(lookup_email, tqdm(email_file))
+    #TODO print help/error if nothing specified
+    
+    print(results)
         
-
-if __name__ == '__main__':
-    main()
