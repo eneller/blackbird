@@ -4,6 +4,7 @@ from tqdm import tqdm
 
 import logging
 
+
 def lookup_username(username):
     return username
 
@@ -25,6 +26,7 @@ def lookup_email(email):
 @click.help_option('--help', '-h')
 @click_config_file.configuration_option(implicit=False)
 def main_cli(username, email, username_file, email_file, filter, no_nsfw, timeout,  max_concurrent_requests, proxy, csv):
+    results = ""
     print('heere')
     if email:
         results = lookup_email(email)
@@ -35,6 +37,10 @@ def main_cli(username, email, username_file, email_file, filter, no_nsfw, timeou
     elif email_file:
         results = map(lookup_email, tqdm(email_file))
     #TODO print help/error if nothing specified
-    
-    print(results)
+
+    if not csv:
+        print(results)
+
+if __name__ == '__main__':
+    main_cli()
         
