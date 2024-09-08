@@ -1,0 +1,3 @@
+[submodule "blackbird-osint/WhatsMyName"]
+	path = blackbird-osint/WhatsMyName
+	url = https://github.com/WebBreacher/WhatsMyName
